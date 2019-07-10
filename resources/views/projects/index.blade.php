@@ -3,8 +3,9 @@
 @section('body')
     {{--{{$projects}}--}}
 
-    @foreach($projects as $project)
-        {{$project->title}} <br>
-        {{$project->description}} <br>
-    @endforeach
+    @forelse($projects as $project)
+        <a href="{{ $project->path() }}">{{$project->title}} - {{$project->description}}</a><br>
+    @empty
+        No projects available.
+    @endforelse
 @endsection

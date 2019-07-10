@@ -76,7 +76,11 @@ class ProjectsController extends Controller
      */
     public function show(Project $project)
     {
-        //
+//        dd($project);
+//        $project = Project::whereId($project->id);
+//        dd(request('project'));
+//        $project = Project::all()->first();
+        return view('projects.show', compact('project'));
     }
 
     /**
