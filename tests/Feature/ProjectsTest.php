@@ -28,7 +28,7 @@ class ProjectsTest extends TestCase
     /** @test */
     public function a_user_can_create_project()
     {
-//        $this->withExceptionHandling();
+        $this->withExceptionHandling();
 
         $attributes = [
             'title'         => $this->faker->sentence,
@@ -47,5 +47,20 @@ class ProjectsTest extends TestCase
         $this->assertDatabaseHas('projects', $attributes);
 
         $this->get('/projects')->assertSee($attributes['title']);
+    }
+
+    /** @test */
+    public function a_project_requires_a_title()
+    {
+        // Make fake model for Project and set title = ''
+        $attr = factory('App\Project')->raw(['title' => '']);
+        $this->post('/projects', $attr)->assertSessionHasErrors('title');
+    }
+
+    /** @test */
+    public function a_project_requires_a_description()
+    {
+        $attr = factory('App\Project')->raw(['description' => '']);
+        $this->post('/projects', $attr)->assertSessionHasErrors('description');
     }
 }

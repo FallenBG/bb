@@ -37,13 +37,33 @@ class ProjectsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store()
     {
         //
-        $project = new Project();
-        $project->title = \request('title');
-        $project->description = \request('description');
-        $project->save();
+//        $validatedData = $this->validateProject();
+//dd($validatedData);
+        // 1: validate data and pass with instance of the object
+//        $project = new Project();
+//        $project->create($validatedData);
+
+        // 2. Directly call the Project with create function ans pass the function return
+        // 2. Very black box approach - to debug must deconstruct the code.
+        Project::create($this->validateProject());
+
+        // 3. Almost the same but have the data to check
+//        Project::create($validatedData);
+
+
+
+//        dd('asd');
+        // 4. The longest but most readable and maintnainable code.
+        // 4. Bad can be when adding new DB fields - must add here also.
+//        $project = new Project();
+//        $project->title         = $validatedData['title'];
+//        $project->description   = $validatedData['description'];
+//        $project->save();
+
+
         return redirect('/projects');
 
     }
@@ -92,4 +112,20 @@ class ProjectsController extends Controller
     {
         //
     }
+
+
+    public function validateProject()
+    {
+        return \Request::validate([
+            'title'         => ['required', 'min:3'],
+            'description'   => 'required'
+        ]);
+    }
+//    public function validateProject()
+//    {
+//        return \Request::validate([
+//            'title' => ['required', 'min:3', 'max:255'],
+//            'description' => 'required'
+//        ]);
+//    }
 }
