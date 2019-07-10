@@ -11,6 +11,24 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+//Route::get('/', function () {
+//    return view('welcome');
+//});
+
+Route::get('/projects', 'ProjectsController@index');
+Route::get('/projects/create', 'ProjectsController@create');
+Route::post('/projects', 'ProjectsController@store');
+//
+//Route::post('/projects', function () {
+//dd('dafak');
+//    Log::info('INFO');
+//    App\Project::create(request(['title', 'description']));
+////
+//});
+//
+//Route::get('/projects1', function () {
+//dd('dafak');
+////    Log::info('INFO');
+////    App\Project::create(request('title', 'description'));
+////
+//});
