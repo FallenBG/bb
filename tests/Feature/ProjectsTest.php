@@ -28,7 +28,7 @@ class ProjectsTest extends TestCase
     /** @test */
     public function a_user_can_create_project()
     {
-        $this->withExceptionHandling();
+        $this->withoutExceptionHandling();
 
         $attributes = [
             'title'         => $this->faker->sentence,
@@ -47,6 +47,17 @@ class ProjectsTest extends TestCase
         $this->assertDatabaseHas('projects', $attributes);
 
         $this->get('/projects')->assertSee($attributes['title']);
+    }
+    /** @test */
+    public function a_user_can_view_a_project()
+    {
+        $this->withoutExceptionHandling();
+
+        $project = factory('App\Project')->create();
+//        dd($project);
+        $this->get($project->path())
+            ->assertSee($project->title)
+            ->assertSee($project->description);
     }
 
     /** @test */
