@@ -48,6 +48,7 @@ class ProjectsController extends Controller
 
         // 2. Directly call the Project with create function ans pass the function return
         // 2. Very black box approach - to debug must deconstruct the code.
+
         Project::create($this->validateProject());
 
         // 3. Almost the same but have the data to check
@@ -120,16 +121,13 @@ class ProjectsController extends Controller
 
     public function validateProject()
     {
-        return \Request::validate([
+        $attributes = \Request::validate([
             'title'         => ['required', 'min:3'],
             'description'   => 'required'
         ]);
+
+        $attributes['owner_id'] = auth()->id();
+
+        return $attributes;
     }
-//    public function validateProject()
-//    {
-//        return \Request::validate([
-//            'title' => ['required', 'min:3', 'max:255'],
-//            'description' => 'required'
-//        ]);
-//    }
 }

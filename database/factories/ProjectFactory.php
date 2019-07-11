@@ -9,6 +9,9 @@ $factory->define(Project::class, function (Faker $faker) {
     return [
         // Blueprint for a project
         'title'         => $faker->sentence,
-        'description'   => $faker->paragraph
+        'description'   => $faker->paragraph,
+        'owner_id'      => function() {
+            return factory(App\User::class)->create()->id;
+        }
     ];
 });
