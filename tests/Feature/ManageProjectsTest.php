@@ -9,7 +9,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Validation\ValidationException;
 
-class ProjectsTest extends TestCase
+class ManageProjectsTest extends TestCase
 {
     use WithFaker;
     use RefreshDatabase;
@@ -27,40 +27,60 @@ class ProjectsTest extends TestCase
 //    }
 
     /** @test */
-    public function guests_may_not_create_projects()
-    {
-        // When the result is exception - make sure we handle it or we fail the test!!!!
-//        $this->withoutExceptionHandling();
-//        $this->handleValidationExceptions();
-
-        $attributes = factory('App\Project')->raw();
-//        dd($attributes);
-        $this->post('/projects', $attributes)->assertRedirect('/login');
-    }
-
-    /** @test */
-    public function guests_may_not_view_projects()
-    {
-        // When the result is exception - make sure we handle it or we fail the test!!!!
-//        $this->withoutExceptionHandling();
-//        $this->handleValidationExceptions();
-
-        $attributes = factory('App\Project')->raw();
-//        dd($attributes);
-        $this->get('/projects', $attributes)->assertRedirect('/login');
-    }
-
-    /** @test */
-    public function guests_may_not_view_single_project()
+    public function guests_cannot_manage_projects()
     {
         // When the result is exception - make sure we handle it or we fail the test!!!!
 //        $this->withoutExceptionHandling();
 //        $this->handleValidationExceptions();
 
         $project = factory('App\Project')->create();
-//        dd($project->path());
+//        dd($attributes);
+        $this->get('/projects/create')->assertRedirect('/login');
+        $this->get('/projects')->assertRedirect('/login');
         $this->get($project->path())->assertRedirect('/login');
+        $this->post('/projects', $project->toArray())->assertRedirect('/login');
     }
+
+    /**
+     * BEllow code is represented above in a single function
+     * Is ot a good solution or not - depends.
+     */
+
+//    /** @test */
+//    public function guests_may_not_create_projects()
+//    {
+//        // When the result is exception - make sure we handle it or we fail the test!!!!
+////        $this->withoutExceptionHandling();
+////        $this->handleValidationExceptions();
+//
+//        $attributes = factory('App\Project')->raw();
+////        dd($attributes);
+//        $this->post('/projects', $attributes)->assertRedirect('/login');
+//    }
+//
+//    /** @test */
+//    public function guests_may_not_view_projects()
+//    {
+//        // When the result is exception - make sure we handle it or we fail the test!!!!
+////        $this->withoutExceptionHandling();
+////        $this->handleValidationExceptions();
+//
+//        $attributes = factory('App\Project')->raw();
+////        dd($attributes);
+//        $this->get('/projects', $attributes)->assertRedirect('/login');
+//    }
+//
+//    /** @test */
+//    public function guests_may_not_view_single_project()
+//    {
+//        // When the result is exception - make sure we handle it or we fail the test!!!!
+////        $this->withoutExceptionHandling();
+////        $this->handleValidationExceptions();
+//
+//        $project = factory('App\Project')->create();
+////        dd($project->path());
+//        $this->get($project->path())->assertRedirect('/login');
+//    }
 
     /** @test */
     public function a_user_can_create_project()
@@ -68,6 +88,8 @@ class ProjectsTest extends TestCase
         $this->withoutExceptionHandling();
 
         $this->actingAs(factory('App\User')->create());
+
+        $this->get('/projects/create')->assertStatus(200);
 
 //        $attributes = [
 //            'title'         => $this->faker->sentence,
