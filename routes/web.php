@@ -15,11 +15,17 @@ Route::get('/', function () {
     return view('layout');
 });
 
-Route::get('/projects', 'ProjectsController@index');
-// BE CEARFULL HOW YOU ORDER THE routes!!! IF create is after show - it will always trigger the show method.
-Route::get('/projects/create', 'ProjectsController@create');
-Route::get('/projects/{project}', 'ProjectsController@show');
-Route::post('/projects', 'ProjectsController@store')->middleware('auth');
+
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('/projects', 'ProjectsController@index');
+// BE CEAREFULL HOW YOU ORDER THE routes!!! IF create is after show - it will always trigger the show method.
+    Route::get('/projects/create', 'ProjectsController@create');
+    Route::get('/projects/{project}', 'ProjectsController@show');
+    Route::post('/projects', 'ProjectsController@store');
+
+    Route::get('/home', 'HomeController@index')->name('home');
+
+});
 
 
 //Route::get('/login');
@@ -41,5 +47,3 @@ Route::post('/projects', 'ProjectsController@store')->middleware('auth');
 ////
 //});
 Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');

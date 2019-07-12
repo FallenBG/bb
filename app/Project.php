@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $id
  * @property string $title
  * @property string $description
+ * @property int $owner_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Project whereCreatedAt($value)
@@ -32,4 +33,10 @@ class Project extends Model
     {
         return "/projects/" . $this->id;
     }
+
+    public function owner()
+    {
+        return $this->belongsTo(User::class);
+    }
+
 }

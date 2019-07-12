@@ -27,7 +27,7 @@ class ProjectsTest extends TestCase
 //    }
 
     /** @test */
-    public function only_authenticated_user_can_create_project()
+    public function guests_may_not_create_projects()
     {
         // When the result is exception - make sure we handle it or we fail the test!!!!
 //        $this->withoutExceptionHandling();
@@ -36,6 +36,30 @@ class ProjectsTest extends TestCase
         $attributes = factory('App\Project')->raw();
 //        dd($attributes);
         $this->post('/projects', $attributes)->assertRedirect('/login');
+    }
+
+    /** @test */
+    public function guests_may_not_view_projects()
+    {
+        // When the result is exception - make sure we handle it or we fail the test!!!!
+//        $this->withoutExceptionHandling();
+//        $this->handleValidationExceptions();
+
+        $attributes = factory('App\Project')->raw();
+//        dd($attributes);
+        $this->get('/projects', $attributes)->assertRedirect('/login');
+    }
+
+    /** @test */
+    public function guests_may_not_view_single_project()
+    {
+        // When the result is exception - make sure we handle it or we fail the test!!!!
+//        $this->withoutExceptionHandling();
+//        $this->handleValidationExceptions();
+
+        $project = factory('App\Project')->create();
+//        dd($project->path());
+        $this->get($project->path())->assertRedirect('/login');
     }
 
     /** @test */
@@ -71,15 +95,28 @@ class ProjectsTest extends TestCase
 
 
     /** @test */
-    public function a_user_can_view_a_project()
+    public function a_user_can_view_their_project()
     {
-        $this->withoutExceptionHandling();
+//        $this->withoutExceptionHandling();
 
-        $project = factory('App\Project')->create();
+        $this->be(factory('App\User')->create());
+
+        $project = factory('App\Project')->create(['owner_id' => auth()->id()]);
 //        dd($project);
         $this->get($project->path())
             ->assertSee($project->title)
             ->assertSee($project->description);
+    }
+    
+    /** @test */
+    public function an_authenticated_user_cannot_view_the_projects_of_others()
+    {
+        $this->be(factory('App\User')->create());
+//        $this->withoutExceptionHandling();
+
+        $project = factory('App\Project')->create();
+
+        $this->get($project->path())->assertStatus(403);
     }
 
     /** @test */
