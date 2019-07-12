@@ -15,7 +15,7 @@ class ProjectsController extends Controller
     public function index()
     {
         //
-        $projects = Project::all();
+        $projects = auth()->user()->projects;
 //        dd($projects);
         return view('projects.index', compact('projects'));
     }
@@ -81,6 +81,12 @@ class ProjectsController extends Controller
 //        $project = Project::whereId($project->id);
 //        dd(request('project'));
 //        $project = Project::all()->first();
+
+
+//        abort_if($project->owner_id != auth()->id(), 403);
+
+        if (auth()->user()->isNot($project->owner)) abort(403);
+
         return view('projects.show', compact('project'));
     }
 
