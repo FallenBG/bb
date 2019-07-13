@@ -6,7 +6,8 @@
         <p class="card-text">{{ Str::limit($project->description, 100)}}</p>
     </div>
     <div class="card-footer">
-        <small class="text-muted float-left align-bottom">Last updated {{ $project->last_updated->diffForHumans() }}</small>
+
+        <small class="text-muted float-left">Last updated {{ $project->last_updated->diffForHumans() }}</small>
         <a href="{{ $project->path() }}" class="btn btn-primary float-right">Go</a>
     </div>
 </div>
