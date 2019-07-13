@@ -25,14 +25,13 @@
         <div class="col-lg-10">
             <div>
                 <h2>Tasks:</h2>
-                {{--@foreach($tasks as $key => $task)--}}
-                <div id="task-0" class="card rounded-1 shadow bbtask">
-                    <div class="card-body">
-                        simple task
+                @foreach($project->tasks as $key => $task)
+                    <div id="task-0" class="card rounded-1 shadow bbtask">
+                        <div class="card-body">
+                            {{ $task->body }}
+                        </div>
                     </div>
-                </div>
-
-                {{--@endforeach--}}
+                @endforeach
 
             </div>
 
@@ -56,7 +55,7 @@
             <div>
                 <div class="card bbcard rounded-1 shadow bg-white">
                     <div class="card-header bg-transparent border border-primary border-bottom-0 border-3">
-                        <h5>{{$project->title}}</h5>
+                        <h5>{{ $project->title }}</h5>
                     </div>
                     <div class="card-body">
                         <p class="card-text">{{ $project->description }}</p>

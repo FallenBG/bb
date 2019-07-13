@@ -97,7 +97,7 @@ class ProjectsController extends Controller
 
 //        dd($project);
         $project->last_updated = Carbon::parse($project->updated_at);
-
+//        dd('wwaa2312312');
         return view('projects.show', compact('project'));
     }
 
