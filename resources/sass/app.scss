@@ -7,8 +7,40 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
-@tailwind base;
+@media (min-width: 1200px) {
+  .container {
+    max-width: 1600px;
+  }
+}
 
-@tailwind components;
+div.bbcard {
+  width: 230px;
+  max-width: 230px;
+}
 
-@tailwind utilities;
+div.bbcard-deck {
+  margin-bottom: 20px;
+}
+
+div.card-footer small {
+  margin-top: 10px;
+}
+
+.rounded-1 {
+  border-radius: 1rem !important;
+}
+
+
+div.bbcard .card-header {
+  border-top-right-radius: 1rem;
+  border-top-left-radius: 1rem;
+
+}
+
+.border-3 {
+  border-width:3px !important;
+}
+
+div.bbcard.shadow {
+  box-shadow: -0.5rem 0.5rem 1rem rgba(0, 0, 0, 0.25) !important;
+}

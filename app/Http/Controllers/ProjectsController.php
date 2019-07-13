@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Project;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class ProjectsController extends Controller
@@ -16,7 +17,14 @@ class ProjectsController extends Controller
     {
         //
         $projects = auth()->user()->projects;
-//        dd($projects);
+
+//        foreach ($projects as $project) {
+//            $project->last_updated = Carbon::parse($project->updated_at);
+//        }
+        $projects->each(function ($item) {
+            $item['last_updated'] = Carbon::parse($item->updated_at);
+        });
+
         return view('projects.index', compact('projects'));
     }
 
@@ -86,6 +94,9 @@ class ProjectsController extends Controller
 //        abort_if($project->owner_id != auth()->id(), 403);
 
         if (auth()->user()->isNot($project->owner)) abort(403);
+
+//        dd($project);
+        $project->last_updated = Carbon::parse($project->updated_at);
 
         return view('projects.show', compact('project'));
     }

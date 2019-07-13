@@ -3,15 +3,16 @@
 @section('content')
     {{--{{$projects}}--}}
 
+    {{--<div class="container-fluid">--}}
     {{--@foreach($projects as $project)--}}
         {{$project->title}} <br>
-        {{$project->description}} <br>
+        {{$project->description}}
     {{--@endforeach--}}
 
-    <br><br>
-    <a href="/projects">
-        <button type="submit">
-            Back
-        </button>
-    </a>
+        <a href="/projects" class="float-right">
+            <button type="button" class="btn btn-primary">
+                Back
+            </button>
+        </a>
+    {{--</div>--}}
 @endsection
