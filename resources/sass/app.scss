@@ -14,16 +14,19 @@
 }
 
 div.bbcard {
-  width: 230px;
+  //width: 230px;
   max-width: 230px;
+  min-width: 230px;
+  margin-bottom: 20px !important;
 }
 
-div.bbcard-deck {
-  margin-bottom: 20px;
+div.bbcard {
+
 }
 
 div.card-footer small {
   margin-top: 10px;
+  //margin-bottom: 5px;
 }
 
 .rounded-1 {
@@ -44,3 +47,7 @@ div.bbcard .card-header {
 div.bbcard.shadow {
   box-shadow: -0.5rem 0.5rem 1rem rgba(0, 0, 0, 0.25) !important;
 }
+
+//div.card-footer a {
+//  margin-top: 8px;
+//}

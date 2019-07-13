@@ -10651,12 +10651,9 @@ a.text-dark:focus {
 }
 
 div.bbcard {
-  width: 230px;
   max-width: 230px;
-}
-
-div.bbcard-deck {
-  margin-bottom: 20px;
+  min-width: 230px;
+  margin-bottom: 20px !important;
 }
 
 div.card-footer small {
