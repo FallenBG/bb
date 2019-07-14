@@ -57,7 +57,7 @@ class ProjectsController extends Controller
         // 2. Directly call the Project with create function ans pass the function return
         // 2. Very black box approach - to debug must deconstruct the code.
 
-        Project::create($this->validateProject());
+        $project = Project::create($this->validateProject());
 
         // 3. Almost the same but have the data to check
 //        Project::create($validatedData);
@@ -73,7 +73,7 @@ class ProjectsController extends Controller
 //        $project->save();
 
 
-        return redirect('/projects');
+        return redirect($project->path());
 
     }
 
