@@ -8,6 +8,9 @@
                 Home
             </a>
             / {{$project->title}}
+            / <button type="button" class="btn btn-primary">
+                Add Task
+            </button>
         </div>
         <div class="col-lg-2">
             <a href="/projects" class="float-right">
@@ -26,12 +29,33 @@
             <div>
                 <h2>Tasks:</h2>
                 @foreach($project->tasks as $key => $task)
-                    <div id="task-0" class="card rounded-1 shadow bbtask">
+                    <div id="task-0" class="card rounded-1 shadow bbtask border border-bottom-0 border-top-0 border-3 border-primary">
                         <div class="card-body">
                             {{ $task->body }}
+                            <div class="btn-group float-right" role="group">
+                                <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Actions
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                    <a class="dropdown-item" href="#">Edit</a>
+                                    <a class="dropdown-item" href="#">Close</a>
+                                    <a class="dropdown-item" href="#">Assign</a>
+                                    <a class="dropdown-item" href="#">Priority</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 @endforeach
+
+                <div id="task-0" class="card rounded-1 shadow bbtask">
+                    <div class="card-body">
+                        <form action="{{ $project->path() }}/tasks" method="post">
+                            @csrf
+                            <input placeholder="Add Task:" class="w-75" name="body">
+                        </form>
+
+                    </div>
+                </div>
 
             </div>
 

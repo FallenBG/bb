@@ -36,15 +36,18 @@ class ProjectTasksController extends Controller
     public function store(Project $project)
     {
         //
+
+        if (auth()->user()->isNot($project->owner)) abort(403);
+//        dd('asd');
         $validated = \request()->validate([
             'body'      => 'required|min:3',
-            'title'     => 'required|min:3',
+//            'title'     => 'required|min:3',
         ]);
 //        dd($validated)  ;
         $project->addTask([
             'body' => $validated['body'],
-            'title' => $validated['title'],
-            'user_id' => \request('user_id')
+//            'title' => $validated['title'],
+            'user_id' => auth()->id()
         ]);
         return redirect($project->path());
     }
