@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Note;
 use App\Project;
-use App\Task;
 use Illuminate\Http\Request;
 
-class ProjectTasksController extends Controller
+class ProjectNoteController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -37,27 +37,23 @@ class ProjectTasksController extends Controller
     public function store(Project $project)
     {
         //
-//dd('anaaa');
-        if (auth()->user()->isNot($project->owner)) abort(403);
-//        dd('asd');
-        $validated = \request()->validate([
-            'body'      => 'required|min:3',
+//        if (auth()->user()->isNot($project->owner)) abort(403);
+        $this->authorize('update', $project);
+
+        $project->addNote([
+            'body' => 'Note'
         ]);
-//        dd($validated)  ;
-        $project->addTask([
-            'body' => $validated['body'],
-            'user_id' => auth()->id()
-        ]);
+
         return redirect($project->path());
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Note  $note
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Note $note)
     {
         //
     }
@@ -65,10 +61,10 @@ class ProjectTasksController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Note  $note
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Note $note)
     {
         //
     }
@@ -77,36 +73,32 @@ class ProjectTasksController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Note  $note
      * @return \Illuminate\Http\Response
      */
-    public function update(Project $project, Task $task)
+    public function update(Project $project, Note $note)
     {
-//        dd(\request('body'));
+
 //        if (auth()->user()->isNot($project->owner)) abort(403);
         $this->authorize('update', $project);
         $validated = \request()->validate([
-            'body'      => 'required|min:3',
-//            'completed' => 'boolean'
+            'body'      => 'required'
         ]);
-//        if (\request('completed')) {
-            $completed = \request('completed');
-//        }
-//        dd($completed)  ;
-        $task->update([
-            'body' => $validated['body'],
-            'completed' => isset($completed) ? true : false
+
+        $note->update([
+            'body' => $validated['body']
         ]);
+
         return redirect($project->path());
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Note  $note
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Note $note)
     {
         //
     }

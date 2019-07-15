@@ -123,7 +123,7 @@ class ManageProjectsTest extends TestCase
     /** @test */
     public function a_user_can_view_their_project()
     {
-//        $this->withoutExceptionHandling();
+        $this->withoutExceptionHandling();
 
 //        $this->be(factory('App\User')->create());
         $this->signIn();

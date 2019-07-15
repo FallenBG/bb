@@ -58,8 +58,9 @@ class ProjectsController extends Controller
 
         // 2. Directly call the Project with create function ans pass the function return
         // 2. Very black box approach - to debug must deconstruct the code.
-
+//dd('waaaaaaa');
         $project = Project::create($this->validateProject());
+        $project->note()->create(['body' => 'new note']);
 
         // 3. Almost the same but have the data to check
 //        Project::create($validatedData);
@@ -95,7 +96,8 @@ class ProjectsController extends Controller
 
 //        abort_if($project->owner_id != auth()->id(), 403);
 
-        if (auth()->user()->isNot($project->owner)) abort(403);
+//        if (auth()->user()->isNot($project->owner)) abort(403);
+        $this->authorize('update', $project);
 
 //        dd($project);
         $project->last_updated = Carbon::parse($project->updated_at);
