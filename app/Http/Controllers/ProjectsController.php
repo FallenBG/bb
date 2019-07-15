@@ -18,6 +18,8 @@ class ProjectsController extends Controller
         //
         $projects = auth()->user()->projects;
 
+//        $projects = auth()->user()->projects()->orderBy('updated_at', 'desc')->get();
+
 //        foreach ($projects as $project) {
 //            $project->last_updated = Carbon::parse($project->updated_at);
 //        }

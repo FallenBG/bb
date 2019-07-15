@@ -30,6 +30,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\User wherePassword($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereRememberToken($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereUpdatedAt($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Project[] $projects
  */
 class User extends Authenticatable
 {
@@ -64,6 +65,9 @@ class User extends Authenticatable
 
     public function projects()
     {
-        return $this->hasMany(Project::class, 'owner_id');
+        // Different ways to get the most recently updated projects
+//        return $this->hasMany(Project::class, 'owner_id')->orderBy('updated_at', 'desc');
+//        return $this->hasMany(Project::class, 'owner_id')->orderByDesc('updated_at');
+        return $this->hasMany(Project::class, 'owner_id')->latest('updated_at');
     }
 }

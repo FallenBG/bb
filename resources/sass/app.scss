@@ -23,8 +23,9 @@
 
 div.bbcard {
   //width: 230px;
-  max-width: 230px;
-  min-width: 230px;
+  //max-width: 300px;
+  min-width: 240px;
+  flex: 0 1 22% !important;
   margin-bottom: 20px !important;
 }
 

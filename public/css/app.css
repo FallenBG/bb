@@ -11021,8 +11021,8 @@ label .form-check-input.is-invalid .abc-radio:before {
 }
 
 div.bbcard {
-  max-width: 230px;
-  min-width: 230px;
+  min-width: 240px;
+  flex: 0 1 22% !important;
   margin-bottom: 20px !important;
 }
 

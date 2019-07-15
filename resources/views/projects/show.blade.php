@@ -28,7 +28,7 @@
             <div>
                 <h2>Tasks:</h2>
                 @foreach($project->tasks as $key => $task)
-                    <div id="task-0" class="card rounded-1 shadow bbtask border border-bottom-0 border-top-0 border-3 border-primary">
+                    <div id="task-0" class="card rounded-1 shadow bbtask border border-bottom-0 border-top-0 border-3 {{ $task->completed ? "border-success" : 'border-primary' }}">
                         <div class="card-body">
                             <form method="POST" action="{{ $task->path() }}">
                                 @method('PATCH')
