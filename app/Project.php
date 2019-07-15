@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Tests\Unit\NoteTest;
 
 /**
  * App\Project
@@ -51,5 +52,16 @@ class Project extends Model
     {
 //        dd($data);
         return $this->tasks()->create($data);
+    }
+
+    public function addNote($data)
+    {
+//        dd($data);
+        return $this->note()->create($data);
+    }
+
+    public function note()
+    {
+        return $this->hasOne(Note::class);
     }
 }

@@ -11026,6 +11026,10 @@ div.bbcard {
   margin-bottom: 20px !important;
 }
 
+div.bbcard .card-body {
+  min-height: 140px;
+}
+
 div.card-footer small {
   margin-top: 10px;
 }

@@ -82,12 +82,17 @@
                 <h2>Notes:</h2>
                 <div id="notes" class="card rounded-1 shadow bbtask">
                     <div class="card-body">
-                        Notes he
-                        dsaklnfsd
-                        asfdasfadkl;f <br>
-                        sdfdsf<br>
-                        sdasdf<br>
-                        asdfafas
+                        @if (isset($project->note->body))
+                            <form action="{{ $project->path() }}/note/{{ $project->note->id ?? ''}}" method="post">
+                                @method('PATCH')
+                                @csrf
+                                <textarea class="wflex-fill w-100 form-control border-0" id="body" name="body" rows="10">{{ $project->note->body }}</textarea>
+                                <button type="submit" class="btn btn-primary mt-2 float-right">Submit</button>
+
+                            </form>
+                        @else
+                            <a href='{{ $project->path() }}/note'><button type='button' class='btn btn-primary'>Create</button></a>
+                        @endif
                     </div>
                 </div>
             </div>
