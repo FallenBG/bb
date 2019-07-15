@@ -23,7 +23,6 @@
     </div>
 
 
-
     <div class="row project">
         <div class="col-lg-10">
             <div>
@@ -31,18 +30,38 @@
                 @foreach($project->tasks as $key => $task)
                     <div id="task-0" class="card rounded-1 shadow bbtask border border-bottom-0 border-top-0 border-3 border-primary">
                         <div class="card-body">
-                            {{ $task->body }}
-                            <div class="btn-group float-right" role="group">
-                                <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Actions
-                                </button>
-                                <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                    <a class="dropdown-item" href="#">Edit</a>
-                                    <a class="dropdown-item" href="#">Close</a>
-                                    <a class="dropdown-item" href="#">Assign</a>
-                                    <a class="dropdown-item" href="#">Priority</a>
+                            <form method="POST" action="{{ $task->path() }}">
+                                @method('PATCH')
+                                @csrf
+                                <div class="d-flex">
+
+                                    @if($task->completed)
+                                        <div class="text-black-50 flex-fill w-100 ml-2 align-self-center">
+                                            {{ $task->body }}
+                                        </div>
+                                        <input name="body" class="flex-fill w-100 form-control border-0" style="display: none" value="{{ $task->body }}">
+                                        {{--<input name="body" disabled class="flex-fill w-100 form-control border-0 text-black-50" value="{{ $task->body }}">--}}
+                                    @else
+                                        <input name="body" class="flex-fill w-100 form-control border-0" value="{{ $task->body }}">
+                                    @endif
+
+                                    <div class="custom-control custom-checkbox mr-sm-2 mb-sm-2 flex-fill">
+                                        <input name="completed" id="completed-{{ $task->id }}" type="checkbox" {{ $task->completed ? "checked" : '' }} class=" custom-control-input" onchange="this.form.submit()">
+                                        <label class="custom-control-label" for="completed-{{ $task->id }}"></label>
+                                    </div>
                                 </div>
-                            </div>
+                            </form>
+                            {{--<div class="btn-group float-right" role="group">--}}
+                                {{--<button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">--}}
+                                    {{--Actions--}}
+                                {{--</button>--}}
+                                {{--<div class="dropdown-menu" aria-labelledby="btnGroupDrop1">--}}
+                                    {{--<a class="dropdown-item" href="#">Edit</a>--}}
+                                    {{--<a class="dropdown-item" href="#">Close</a>--}}
+                                    {{--<a class="dropdown-item" href="#">Assign</a>--}}
+                                    {{--<a class="dropdown-item" href="#">Priority</a>--}}
+                                {{--</div>--}}
+                            {{--</div>--}}
                         </div>
                     </div>
                 @endforeach
@@ -51,7 +70,7 @@
                     <div class="card-body">
                         <form action="{{ $project->path() }}/tasks" method="post">
                             @csrf
-                            <input placeholder="Add Task:" class="w-75" name="body">
+                            <input placeholder="Add Task:" class="wflex-fill w-100 form-control border-0" name="body">
                         </form>
 
                     </div>
