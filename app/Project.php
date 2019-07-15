@@ -22,6 +22,9 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Project whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Project whereTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Project whereUpdatedAt($value)
+ * @property-read \App\User $owner
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Task[] $tasks
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Project whereOwnerId($value)
  */
 class Project extends Model
 {

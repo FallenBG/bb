@@ -16,7 +16,7 @@
 
         <div class="row">
 
-            <div class="col-lg-10 card-deck bbcard-deck">
+            <div class="col-lg-10 card-deck bbcard-deck flex-container">
                 {{--<div class="container-fluid">--}}
                     @forelse($projects as $key => $project)
                         @if ($key == 0) @php $key + 1; @endphp @endif
