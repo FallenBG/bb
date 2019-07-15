@@ -7,6 +7,14 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins";
+
+@import url("http://flatlogic.github.io/awesome-bootstrap-checkbox/demo/1.0.0/font-awesome/css/font-awesome.min.css");
+
+@import "~awesome-bootstrap-checkbox";
+
 @media (min-width: 1200px) {
   .container {
     max-width: 1600px;
@@ -58,4 +66,31 @@ div.bbtask {
 
 div.project {
   margin-top: 26px;
+}
+
+div.custom-checkbox {
+  align-self: center;
+}
+.custom-control-label::before {
+  position: absolute;
+  top: 0rem;
+  left: -1.5rem;
+  display: block;
+  width: 2rem;
+  height: 2rem;
+  pointer-events: none;
+  content: "";
+  background-color: #fff;
+  border: #adb5bd solid 1px;
+}
+
+.custom-control-label::after {
+  position: absolute;
+  top: 0rem;
+  left: -1.5rem;
+  display: block;
+  width: 2rem;
+  height: 2rem;
+  content: "";
+  background: no-repeat 50%/50% 50%;
 }

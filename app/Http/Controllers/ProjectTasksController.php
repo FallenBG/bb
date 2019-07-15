@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Project;
+use App\Task;
 use Illuminate\Http\Request;
 
 class ProjectTasksController extends Controller
@@ -36,17 +37,15 @@ class ProjectTasksController extends Controller
     public function store(Project $project)
     {
         //
-
+//dd('anaaa');
         if (auth()->user()->isNot($project->owner)) abort(403);
 //        dd('asd');
         $validated = \request()->validate([
             'body'      => 'required|min:3',
-//            'title'     => 'required|min:3',
         ]);
 //        dd($validated)  ;
         $project->addTask([
             'body' => $validated['body'],
-//            'title' => $validated['title'],
             'user_id' => auth()->id()
         ]);
         return redirect($project->path());
@@ -81,9 +80,23 @@ class ProjectTasksController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Project $project, Task $task)
     {
-        //
+//        dd(\request('body'));
+        if (auth()->user()->isNot($project->owner)) abort(403);
+        $validated = \request()->validate([
+            'body'      => 'required|min:3',
+//            'completed' => 'boolean'
+        ]);
+//        if (\request('completed')) {
+            $completed = \request('completed');
+//        }
+//        dd($completed)  ;
+        $task->update([
+            'body' => $validated['body'],
+            'completed' => isset($completed) ? true : false
+        ]);
+        return redirect($project->path());
     }
 
     /**

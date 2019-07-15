@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Project;
 use Illuminate\Support\Facades\App;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -104,8 +105,10 @@ class ManageProjectsTest extends TestCase
             'description'   => $this->faker->paragraph,
         ];
 
-        $response = $this->post('/projects', $attributes)->assertRedirect('/projects');
+        $response = $this->post('/projects', $attributes);
 
+        $project = Project::where($attributes)->first();
+        $response->assertRedirect($project->path());
 //        dd(get_class($response));
 //        $response->dump();
 //        dd(\DB::getQueryLog());
