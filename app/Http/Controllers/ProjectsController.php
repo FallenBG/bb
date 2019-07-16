@@ -59,6 +59,7 @@ class ProjectsController extends Controller
         // 2. Directly call the Project with create function ans pass the function return
         // 2. Very black box approach - to debug must deconstruct the code.
 //dd('waaaaaaa');
+//        dd(\request());
         $project = Project::create($this->validateProject());
         $project->note()->create(['body' => 'new note']);
 
@@ -83,8 +84,9 @@ class ProjectsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Project  $project
+     * @param  \App\Project $project
      * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function show(Project $project)
     {
@@ -114,18 +116,24 @@ class ProjectsController extends Controller
     public function edit(Project $project)
     {
         //
+        return view('projects.update', compact('project'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Project  $project
+     * @param  \Illuminate\Http\Request $request
+     * @param  \App\Project $project
      * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function update(Request $request, Project $project)
     {
-        //
+        $this->authorize('update', $project);
+
+        $project->update($this->validateProject());
+
+        return redirect($project->path());
     }
 
     /**
@@ -144,7 +152,7 @@ class ProjectsController extends Controller
     {
         $attributes = \Request::validate([
             'title'         => ['required', 'min:3'],
-            'description'   => 'required'
+            'description'   => ['max:2500', 'min:3']
         ]);
 
         $attributes['owner_id'] = auth()->id();

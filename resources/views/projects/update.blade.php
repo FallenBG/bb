@@ -2,14 +2,15 @@
 
 @section('content')
     <div class="row align-items-center justify-content-center">
-        <h1>Create project</h1>
+        <h1>Update project</h1>
     </div>
     <div class="row align-items-center justify-content-center">
-        <form action="/projects{{ isset($project->id) ? '/' . $project->id . '/update' : '' }}" method="post" class="w-50">
+
+        <form action="/projects/{{ $project->id }}/update" method="post" class="w-50">
+            @method('PATCH')
             @csrf
             @include('projects.partials.form', [
-                'project' => new App\Project,
-                'buttonText' => 'Create'
+                'buttonText' => 'Update'
             ])
         </form>
     </div>

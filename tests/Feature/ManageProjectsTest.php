@@ -48,41 +48,30 @@ class ManageProjectsTest extends TestCase
      * Is ot a good solution or not - depends.
      */
 
-//    /** @test */
-//    public function guests_may_not_create_projects()
-//    {
-//        // When the result is exception - make sure we handle it or we fail the test!!!!
-////        $this->withoutExceptionHandling();
-////        $this->handleValidationExceptions();
+    /** @test */
+    public function guests_may_not_create_projects()
+    {
+        // When the result is exception - make sure we handle it or we fail the test!!!!
+//        $this->withoutExceptionHandling();
+//        $this->handleValidationExceptions();
+
+        $attributes = factory('App\Project')->raw();
+        $this->post('/projects', $attributes)->assertRedirect('/login');
+    }
+
+    /** @test */
+    public function guests_may_not_view_projects()
+    {
+        $attributes = factory('App\Project')->raw();
+        $this->get('/projects', $attributes)->assertRedirect('/login');
+    }
 //
-//        $attributes = factory('App\Project')->raw();
-////        dd($attributes);
-//        $this->post('/projects', $attributes)->assertRedirect('/login');
-//    }
-//
-//    /** @test */
-//    public function guests_may_not_view_projects()
-//    {
-//        // When the result is exception - make sure we handle it or we fail the test!!!!
-////        $this->withoutExceptionHandling();
-////        $this->handleValidationExceptions();
-//
-//        $attributes = factory('App\Project')->raw();
-////        dd($attributes);
-//        $this->get('/projects', $attributes)->assertRedirect('/login');
-//    }
-//
-//    /** @test */
-//    public function guests_may_not_view_single_project()
-//    {
-//        // When the result is exception - make sure we handle it or we fail the test!!!!
-////        $this->withoutExceptionHandling();
-////        $this->handleValidationExceptions();
-//
-//        $project = factory('App\Project')->create();
-////        dd($project->path());
-//        $this->get($project->path())->assertRedirect('/login');
-//    }
+    /** @test */
+    public function guests_may_not_view_single_project()
+    {
+        $project = factory('App\Project')->create();
+        $this->get($project->path())->assertRedirect('/login');
+    }
 
     /** @test */
     public function a_user_can_create_project()
@@ -157,6 +146,7 @@ class ManageProjectsTest extends TestCase
     /** @test */
     public function a_project_requires_a_description()
     {
+//        $this->withoutExceptionHandling();
 //        $this->actingAs(factory('App\User')->create());
         $this->signIn();
 
