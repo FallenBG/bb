@@ -8,9 +8,6 @@
                 Home
             </a>
             / {{$project->title}}
-            / <button type="button" class="btn btn-primary">
-                Add Task
-            </button>
         </div>
         <div class="col-lg-2">
             <a href="/projects" class="float-right">
@@ -39,10 +36,10 @@
                                         <div class="text-black-50 flex-fill w-100 ml-2 align-self-center">
                                             {{ $task->body }}
                                         </div>
-                                        <input name="body" class="flex-fill w-100 form-control border-0" style="display: none" value="{{ $task->body }}">
+                                        <input name="body" class="flex-fill w-100 form-control border-0" style="display: none" value="{{ $task->body }}" required>
                                         {{--<input name="body" disabled class="flex-fill w-100 form-control border-0 text-black-50" value="{{ $task->body }}">--}}
                                     @else
-                                        <input name="body" class="flex-fill w-100 form-control border-0" value="{{ $task->body }}">
+                                        <input name="body" class="flex-fill w-100 form-control border-0" value="{{ $task->body }}" required>
                                     @endif
 
                                     <div class="custom-control custom-checkbox mr-sm-2 mb-sm-2 flex-fill">
@@ -70,7 +67,7 @@
                     <div class="card-body">
                         <form action="{{ $project->path() }}/tasks" method="post">
                             @csrf
-                            <input placeholder="Add Task:" class="wflex-fill w-100 form-control border-0" name="body">
+                            <input placeholder="Add Task:" class="wflex-fill w-100 form-control border-0" name="body" required>
                         </form>
 
                     </div>
@@ -96,6 +93,10 @@
                     </div>
                 </div>
             </div>
+
+            @include('projects.partials.errors', [
+                'class' => ''
+            ])
         </div>
 
         <div class="col-lg-2">
@@ -109,7 +110,8 @@
                         <p class="card-text">{{ $project->description }}</p>
                     </div>
                     <div class="card-footer">
-                        <small class="text-muted float-center">Last updated<br>{{ $project->last_updated }}</small>
+                        <small class="text-muted float-left mt-auto">Last updated<br>{{ $project->last_updated }}</small>
+                        <a href="{{ $project->path() }}/update" class="btn btn-primary float-right">Update</a>
                     </div>
                 </div>
             </div>

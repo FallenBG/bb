@@ -20,8 +20,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/projects', 'ProjectsController@index');
 // BE CEAREFULL HOW YOU ORDER THE routes!!! IF create is after show - it will always trigger the show method.
     Route::get('/projects/create', 'ProjectsController@create');
+    Route::get('/projects/{project}/update', 'ProjectsController@edit');
     Route::get('/projects/{project}', 'ProjectsController@show');
     Route::post('/projects', 'ProjectsController@store');
+    Route::patch('/projects/{project}/update', 'ProjectsController@update');
 
 
     Route::post('projects/{project}/tasks', 'ProjectTasksController@store');
