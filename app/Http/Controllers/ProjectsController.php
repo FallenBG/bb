@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdateProjectRequest;
 use App\Project;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -127,11 +128,15 @@ class ProjectsController extends Controller
      * @return \Illuminate\Http\Response
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function update(Request $request, Project $project)
+    public function update(UpdateProjectRequest $request, Project $project)
     {
-        $this->authorize('update', $project);
 
-        $project->update($this->validateProject());
+//        Use Request
+//        $this->authorize('update', $project);
+//        $project->update($this->validateProject());
+
+        // Use custom form validator for authorization and validation UpdateProjectRequest
+        $project->update($request->validated());
 
         return redirect($project->path());
     }
@@ -148,9 +153,11 @@ class ProjectsController extends Controller
     }
 
 
-    public function validateProject()
+    protected function validateProject()
     {
         $attributes = \Request::validate([
+            // TODO: Read more about sometimes validation
+//            'title'         => ['sometimes|required', 'min:3'],
             'title'         => ['required', 'min:3'],
             'description'   => ['max:2500', 'min:3']
         ]);
