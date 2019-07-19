@@ -25,7 +25,7 @@ class ProjectNotesTest extends TestCase
             'body' => 'updated Note'
         ]);
 
-        $this->assertDatabaseHas('Notes', [
+        $this->assertDatabaseHas('notes', [
             'body' => 'updated Note'
         ]);
 
