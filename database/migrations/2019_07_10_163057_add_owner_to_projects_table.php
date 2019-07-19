@@ -15,8 +15,8 @@ class AddOwnerToProjectsTable extends Migration
     {
         Schema::table('projects', function (Blueprint $table) {
             //
-            $table->unsignedBigInteger('owner_id')->after('description');
-            $table->foreign('owner_id')->references('id')->on('user')->onDelete('cascade');
+            $table->unsignedBigInteger('owner_id')->after('description')->foreign('owner_id')->references('id')->on('user')->onDelete('cascade');
+            $table->foreign('owner_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
