@@ -36,6 +36,7 @@ class ProjectFactory
             'owner_id' => $this->user ?? factory(User::class)
         ]);
 
+        // If we don't set taskCount this won't do anything.
         factory(Task::class, $this->tasksCount)->create([
             'project_id' => $project->id
         ]);

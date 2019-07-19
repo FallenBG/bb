@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Tests\Feature\ActivityFeedTest;
 use Tests\Unit\NoteTest;
 
 /**
@@ -63,5 +64,10 @@ class Project extends Model
     public function note()
     {
         return $this->hasOne(Note::class);
+    }
+
+    public function activity()
+    {
+        return $this->hasMany(Activity::class);
     }
 }
