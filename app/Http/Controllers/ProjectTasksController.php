@@ -90,13 +90,16 @@ class ProjectTasksController extends Controller
 //            'completed' => 'boolean'
         ]);
 //        if (\request('completed')) {
-            $completed = \request('completed');
+//            $completed = \request('completed');
 //        }
 //        dd($completed)  ;
         $task->update([
             'body' => $validated['body'],
-            'completed' => isset($completed) ? true : false
         ]);
+
+        if (\request()->has('completed')) {
+            $task->complete();
+        }
         return redirect($project->path());
     }
 

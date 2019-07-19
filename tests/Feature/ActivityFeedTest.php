@@ -12,7 +12,7 @@ class ActivityFeedTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function creating_a_project_generates_activity()
+    public function creating_a_project_records_activity()
     {
         $project = app(ProjectFactory::class)->create();
 
@@ -22,7 +22,7 @@ class ActivityFeedTest extends TestCase
     }
 
     /** @test */
-    public function updating_a_project_generates_activity()
+    public function updating_a_project_records_activity()
     {
         $project = app(ProjectFactory::class)->create();
 
@@ -30,5 +30,35 @@ class ActivityFeedTest extends TestCase
 
         $this->assertEquals('updated', $project->activity->last()->description);
         $this->assertCount(2, $project->activity);
+    }
+
+    /** @test */
+    public function creating_a_task_records_project_activity()
+    {
+        $project = app(ProjectFactory::class)->withTasks(1)->create();
+
+        $this->assertCount(2, $project->activity);
+    }
+
+    /** @test */
+    public function updating_a_task_records_project_activity()
+    {
+        $project = app(ProjectFactory::class)->withTasks(1)->create();
+
+        $project->tasks[0]->update(['body' => 'updated']);
+
+        $this->assertEquals('task_updated', $project->activity->last()->description);
+        $this->assertCount(3, $project->activity);
+    }
+
+    /** @test */
+    public function completing_a_task_records_project_activity()
+    {
+        $project = app(ProjectFactory::class)->withTasks(1)->create();
+
+        $project->tasks[0]->update(['completed' => 1]);
+
+        $this->assertEquals('task_completed', $project->activity->last()->description);
+        $this->assertCount(3, $project->activity);
     }
 }
