@@ -1,15 +1,17 @@
 <?php
 
-/* @var $factory \Illuminate\Database\Eloquent\Factory */
-
+// @var $factory \Illuminate\Database\Eloquent\Factory
 use App\Project;
 use Faker\Generator as Faker;
 
-$factory->define(Project::class, function (Faker $faker) {
-    return [
+$factory->define(
+    Project::class,
+    function (Faker $faker) {
+        return [
         // Blueprint for a project
-        'title'         => $faker->sentence(4),
-        'description'   => $faker->paragraph(4),
-        'owner_id'      => factory(App\User::class)
-    ];
-});
+            'title'       => $faker->sentence(4),
+            'description' => $faker->paragraph(4),
+            'owner_id'    => factory(App\User::class),
+        ];
+    }
+);

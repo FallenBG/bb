@@ -6,6 +6,8 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateProjectsTable extends Migration
 {
+
+
     /**
      * Run the migrations.
      *
@@ -13,13 +15,18 @@ class CreateProjectsTable extends Migration
      */
     public function up()
     {
-        Schema::create('projects', function (Blueprint $table) {
-            $table->bigIncrements('id')->unsigned();
-            $table->string('title');
-            $table->text('description')->nullable();
-            $table->timestamps();
-        });
-    }
+        Schema::create(
+            'projects',
+            function (Blueprint $table) {
+                $table->bigIncrements('id')->unsigned();
+                $table->string('title');
+                $table->text('description')->nullable();
+                $table->timestamps();
+            }
+        );
+
+    }//end up()
+
 
     /**
      * Reverse the migrations.
@@ -29,5 +36,8 @@ class CreateProjectsTable extends Migration
     public function down()
     {
         Schema::dropIfExists('projects');
-    }
-}
+
+    }//end down()
+
+
+}//end class

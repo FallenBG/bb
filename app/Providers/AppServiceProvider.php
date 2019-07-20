@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Schema;
 
 class AppServiceProvider extends ServiceProvider
 {
+
+
     /**
      * Register any application services.
      *
@@ -19,13 +21,15 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         //
-//        if ($this->app->environment() != 'testing') {
-//            $this->app->register(TelescopeServiceProvider::class);
-//        }
+        // if ($this->app->environment() != 'testing') {
+        // $this->app->register(TelescopeServiceProvider::class);
+        // }
         if ($this->app->environment() !== 'production') {
             $this->app->register(\Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class);
         }
-    }
+
+    }//end register()
+
 
     /**
      * Bootstrap any application services.
@@ -37,5 +41,8 @@ class AppServiceProvider extends ServiceProvider
         Schema::defaultStringLength(191);
         Project::observe(ProjectObserver::class);
         Task::observe(TaskObserver::class);
-    }
-}
+
+    }//end boot()
+
+
+}//end class

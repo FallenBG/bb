@@ -122,16 +122,59 @@ class ProjectTasksTest extends TestCase
         // Then try to update without specifying user.
         // $this->actingAs($project->owner)->patch
         $this->patch($project->tasks->first()->path(), [
-            'body' => 'changed',
+            'body' => 'changed'
+        ]);
+
+        // Must nbot have record in the DB
+        $this->assertDatabaseHas('tasks', [
+            'body' => 'changed'
+        ]);
+
+    }
+
+    /** @test */
+    public function a_task_can_be_completed()
+    {
+        $project = app(ProjectFactory::class)
+            ->ownedBy($this->signIn())
+            ->withTasks(1)
+            ->create();
+
+        $this->patch($project->tasks->first()->path(), [
             'completed' => true
         ]);
 
         // Must nbot have record in the DB
         $this->assertDatabaseHas('tasks', [
-            'body' => 'changed',
             'completed' => true
         ]);
+    }
 
+    /** @test */
+    public function a_task_can_be_incompleted()
+    {
+        $project = app(ProjectFactory::class)->ownedBy($this->signIn())->withTasks(1)->create();
+
+        $this->patch($project->tasks->first()->path(), [
+            'body' => 'asd',
+            'completed' => true
+        ]);
+//
+//        // Must nbot have record in the DB
+//        $this->assertDatabaseHas('tasks', [
+//            'completed' => true
+//        ]);
+//dd($project->tasks->first()->path());
+        $this->patch($project->tasks->first()->path(), [
+            'body' => 'changed',
+            'completed' => false
+        ]);
+
+        // Must nbot have record in the DB
+        $this->assertDatabaseHas('tasks', [
+            'body' => 'changed',
+            'completed' => false
+        ]);
     }
 }
 
