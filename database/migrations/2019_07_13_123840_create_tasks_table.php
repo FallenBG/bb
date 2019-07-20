@@ -6,6 +6,8 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateTasksTable extends Migration
 {
+
+
     /**
      * Run the migrations.
      *
@@ -13,15 +15,20 @@ class CreateTasksTable extends Migration
      */
     public function up()
     {
-        Schema::create('tasks', function (Blueprint $table) {
-            $table->bigIncrements('id')->unsigned();
-            $table->unsignedBigInteger('project_id');
-            $table->unsignedBigInteger('user_id');
-            $table->boolean('completed')->default(false);
-            $table->text('body');
-            $table->timestamps();
-        });
-    }
+        Schema::create(
+            'tasks',
+            function (Blueprint $table) {
+                $table->bigIncrements('id')->unsigned();
+                $table->unsignedBigInteger('project_id');
+                $table->unsignedBigInteger('user_id');
+                $table->boolean('completed')->default(false);
+                $table->text('body');
+                $table->timestamps();
+            }
+        );
+
+    }//end up()
+
 
     /**
      * Reverse the migrations.
@@ -31,5 +38,8 @@ class CreateTasksTable extends Migration
     public function down()
     {
         Schema::dropIfExists('tasks');
-    }
-}
+
+    }//end down()
+
+
+}//end class

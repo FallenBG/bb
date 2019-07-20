@@ -10,9 +10,13 @@ class ProjectPolicy
 {
     use HandlesAuthorization;
 
+
     public function update(User $user, Project $project)
     {
-//        dd([$user,$project] );
+        // dd([$user,$project] );
         return $user->is($project->owner);
-    }
-}
+
+    }//end update()
+
+
+}//end class

@@ -9,6 +9,8 @@ use Laravel\Telescope\TelescopeApplicationServiceProvider;
 
 class TelescopeServiceProvider extends TelescopeApplicationServiceProvider
 {
+
+
     /**
      * Register any application services.
      *
@@ -17,20 +19,23 @@ class TelescopeServiceProvider extends TelescopeApplicationServiceProvider
     public function register()
     {
         // Telescope::night();
-
         $this->hideSensitiveRequestDetails();
 
-        Telescope::filter(function (IncomingEntry $entry) {
-            if ($this->app->isLocal()) {
-                return true;
-            }
+        Telescope::filter(
+            function (IncomingEntry $entry) {
+                if ($this->app->isLocal()) {
+                    return true;
+                }
 
-            return $entry->isReportableException() ||
+                return $entry->isReportableException() ||
                    $entry->isFailedJob() ||
                    $entry->isScheduledTask() ||
                    $entry->hasMonitoredTag();
-        });
-    }
+            }
+        );
+
+    }//end register()
+
 
     /**
      * Prevent sensitive request details from being logged by Telescope.
@@ -45,12 +50,16 @@ class TelescopeServiceProvider extends TelescopeApplicationServiceProvider
 
         Telescope::hideRequestParameters(['_token']);
 
-        Telescope::hideRequestHeaders([
-            'cookie',
-            'x-csrf-token',
-            'x-xsrf-token',
-        ]);
-    }
+        Telescope::hideRequestHeaders(
+            [
+                'cookie',
+                'x-csrf-token',
+                'x-xsrf-token',
+            ]
+        );
+
+    }//end hideSensitiveRequestDetails()
+
 
     /**
      * Register the Telescope gate.
@@ -61,10 +70,17 @@ class TelescopeServiceProvider extends TelescopeApplicationServiceProvider
      */
     protected function gate()
     {
-        Gate::define('viewTelescope', function ($user) {
-            return in_array($user->email, [
-                //
-            ]);
-        });
-    }
-}
+        Gate::define(
+            'viewTelescope',
+            function ($user) {
+                return in_array(
+                    $user->email,
+                    []
+                );
+            }
+        );
+
+    }//end gate()
+
+
+}//end class
