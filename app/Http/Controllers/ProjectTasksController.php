@@ -95,6 +95,7 @@ class ProjectTasksController extends Controller
      */
     public function update(Project $project, Task $task)
     {
+
         // dd(\request('body'));
         // if (auth()->user()->isNot($project->owner)) abort(403);
         $this->authorize('update', $project);
@@ -108,15 +109,15 @@ class ProjectTasksController extends Controller
         // $completed = \request('completed');
         // }
         // dd($completed)  ;
-        $task->update(
-            [
-                'body' => $validated['body'],
-            ]
-        );
+        $task->update($validated);
 
-        if (\request()->has('completed')) {
-            $task->complete();
-        }
+//        if (\request()->has('completed')) {
+//            $task->complete();
+//        }
+
+        $method = \request('completed') ? 'complete' : 'incomplete';
+
+        $task->$method();
 
         return redirect($project->path());
 

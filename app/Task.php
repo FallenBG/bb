@@ -57,5 +57,14 @@ class Task extends Model
 
     }//end complete()
 
+    /**
+     *
+     */
+    public function incomplete()
+    {
+        $this->update(['completed' => false]);
+
+    }//end incomplete()
+
 
 }//end class
