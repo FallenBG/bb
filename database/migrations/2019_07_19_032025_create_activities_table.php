@@ -20,6 +20,11 @@ class CreateActivitiesTable extends Migration
             function (Blueprint $table) {
                 $table->bigIncrements('id')->unsigned();
                 $table->unsignedBigInteger('project_id');
+//                $table->morphs('subject');
+                $table->nullableMorphs('subject');
+//                This is identical to morphs()
+//                $table->unsignedBigInteger('subject_id');
+//                $table->string('subject_type');
                 $table->string('description', 255)->nullable();
                 $table->timestamps();
 
