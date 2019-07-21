@@ -28,18 +28,15 @@ class TaskObserver
     public function updated(Task $task)
     {
         if (isset($task->getChanges()['completed'])) {
-            $task->project->recordActivity( 'task_completed');
+            if ($task->getChanges()['completed']) {
+                $task->project->recordActivity('task_completed');
+            } else {
+                $task->project->recordActivity('task_incompleted');
+            }
         } else {
             $task->project->recordActivity( 'task_updated');
         }
 
-//        if ($task->completed == 1) {
-//            $this->recordActivity( 'task_completed');
-//        } else {
-//
-//            dd($task->getChanges());
-//            $this->recordActivity( 'task_updated');
-//        }
     }
 
     /**
@@ -50,7 +47,8 @@ class TaskObserver
      */
     public function deleted(Task $task)
     {
-        //
+        $task->project->recordActivity( 'task_deleted');
+
     }
 
     /**

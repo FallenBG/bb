@@ -56,9 +56,51 @@ class ActivityFeedTest extends TestCase
     {
         $project = app(ProjectFactory::class)->withTasks(1)->create();
 
-        $project->tasks[0]->update(['completed' => 1]);
+//        $project->tasks[0]->update(['completed' => 1]);
+        $project->tasks->first()->complete();
 
         $this->assertEquals('task_completed', $project->activity->last()->description);
         $this->assertCount(3, $project->activity);
+
     }
+
+    /** @test */
+    public function incompleting_a_task_records_project_activity()
+    {
+        $project = app(ProjectFactory::class)->withTasks(1)->create();
+
+        $this->assertDatabaseHas('tasks', ['completed' => false]);
+        $project->tasks->first()->complete();
+        $this->assertDatabaseHas('tasks', ['completed' => true]);
+
+        $project->tasks->first()->incomplete();
+
+        $this->assertEquals('task_incompleted', $project->activity->last()->description);
+        $this->assertCount(4, $project->activity);
+
+    }
+
+    /** @test */
+    public function editing_a_note_records_project_activity()
+    {
+        $project = app(ProjectFactory::class)->withNote()->create();
+
+        $project->note->update(['body' => 'kur']);
+
+        $this->assertEquals('note_updated', $project->activity->last()->description);
+        $this->assertCount(2, $project->activity);
+
+    }
+
+    /** @test */
+    public function deleting_a_task_records_project_activity()
+    {
+        $project = app(ProjectFactory::class)->withTasks(1)->create();
+
+        $project->tasks->first()->delete();
+
+        $this->assertEquals('task_deleted', $project->activity->last()->description);
+        $this->assertCount(3, $project->activity);
+    }
+
 }
