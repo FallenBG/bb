@@ -67,4 +67,20 @@ class Task extends Model
     }//end incomplete()
 
 
+    public function recordActivity($activity)
+    {
+        $this->activity()->create([
+            'project_id'    => $this->project_id,
+            'description'   => $activity
+        ]);
+
+    }//end recordActivity()
+
+
+    public function activity()
+    {
+        return $this->morphMany(Activity::class, 'subject');
+
+    }//end activity()
+
 }//end class

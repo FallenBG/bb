@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Task;
 use Tests\Setup\ProjectFactory;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -37,7 +38,15 @@ class ActivityFeedTest extends TestCase
     {
         $project = app(ProjectFactory::class)->withTasks(1)->create();
 
+        $this->assertEquals('task_created', $project->activity->last()->description);
         $this->assertCount(2, $project->activity);
+
+        tap($project->activity->last(), function ($activity) {
+            $this->assertEquals('task_created', $activity->description);
+            $this->assertInstanceOf(Task::class, $activity->subject);
+//            $this->assertInstanceOf('', $activity->subject->body);
+            // $activity->subject gives us access to the subject params. In this case - Task.
+        });
     }
 
     /** @test */
@@ -49,6 +58,11 @@ class ActivityFeedTest extends TestCase
 
         $this->assertEquals('task_updated', $project->activity->last()->description);
         $this->assertCount(3, $project->activity);
+
+        tap($project->activity->last(), function ($activity) {
+            $this->assertEquals('task_updated', $activity->description);
+            $this->assertInstanceOf(Task::class, $activity->subject);
+        });
     }
 
     /** @test */
