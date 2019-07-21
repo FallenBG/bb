@@ -140,9 +140,7 @@ class ProjectTasksTest extends TestCase
             ->withTasks(1)
             ->create();
 
-        $this->patch($project->tasks->first()->path(), [
-            'completed' => true
-        ]);
+        $project->tasks->first()->complete();
 
         // Must nbot have record in the DB
         $this->assertDatabaseHas('tasks', [
