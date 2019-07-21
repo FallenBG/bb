@@ -99,25 +99,16 @@ class ProjectTasksController extends Controller
         // dd(\request('body'));
         // if (auth()->user()->isNot($project->owner)) abort(403);
         $this->authorize('update', $project);
+
         $validated = \request()->validate(
             [
-                'body'      => 'required|min:3',
-            // 'completed' => 'boolean'
+                'body'      => 'required|min:3'
             ]
         );
-        // if (\request('completed')) {
-        // $completed = \request('completed');
-        // }
-        // dd($completed)  ;
+
         $task->update($validated);
 
-//        if (\request()->has('completed')) {
-//            $task->complete();
-//        }
-
-        $method = \request('completed') ? 'complete' : 'incomplete';
-
-        $task->$method();
+        \request('completed') ? $task->complete() : $task->incomplete();
 
         return redirect($project->path());
 
