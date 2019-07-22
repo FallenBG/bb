@@ -1,1 +1,1 @@
-You completed "{{ $activity->subject->body }}"
+{{ auth()->id() == $activity->user->id ? 'You' : $activity->user->name }} completed "{{ $activity->subject->body }}"

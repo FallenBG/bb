@@ -1,1 +1,1 @@
-You updated "{{ $activity->subject->body }}"
+{{ auth()->id() == $activity->user->id ? 'You' : $activity->user->name }}  updated "{{ $activity->subject->body }}"

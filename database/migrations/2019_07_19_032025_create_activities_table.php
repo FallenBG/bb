@@ -20,6 +20,7 @@ class CreateActivitiesTable extends Migration
             function (Blueprint $table) {
                 $table->bigIncrements('id')->unsigned();
                 $table->unsignedBigInteger('project_id');
+                $table->unsignedBigInteger('user_id');
 //                $table->morphs('subject');
                 $table->nullableMorphs('subject');
 //                This is identical to morphs()
@@ -30,6 +31,7 @@ class CreateActivitiesTable extends Migration
                 $table->timestamps();
 
                 $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');
+                $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             }
         );
 

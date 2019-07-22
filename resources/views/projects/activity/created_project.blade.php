@@ -1,1 +1,1 @@
-You created a project.
+{{ auth()->id() == $activity->user->id ? 'You' : $activity->user->name }} created a project.
