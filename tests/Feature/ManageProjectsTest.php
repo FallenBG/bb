@@ -111,6 +111,32 @@ class ManageProjectsTest extends TestCase
 
 
     /** @test */
+    public function a_user_can_update_project()
+    {
+        $this->withoutExceptionHandling();
+        $project = \app(ProjectFactory::class)->withNote()->create();
+
+//        dd($project->path());
+//        $project->update([
+//            'description' => 'updated body',
+//            'title'     => 'changed title'
+//        ]);
+//
+//        $this->assertDatabaseHas('projects', [
+//            'description' => 'updated body',
+//            'title'        => 'changed title'
+//        ]);
+
+        $this->actingAs($project->owner)
+            ->patch($project->path().'/update', $attr = ['title' => 'changed title', 'description' => 'updated body'])
+            ->assertRedirect($project->path());
+
+        $this->get($project->path())->assertOk();
+
+        $this->assertDatabaseHas('projects', $attr);
+    }
+
+    /** @test */
     public function a_user_can_view_their_project()
     {
         $project = app(ProjectFactory::class)
