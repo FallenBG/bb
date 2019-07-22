@@ -1,0 +1,1 @@
+{{ auth()->id() == $activity->user->id ? 'You' : $activity->user->name }} updated the note.

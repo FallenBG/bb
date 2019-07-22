@@ -67,12 +67,28 @@ trait RecordsActivity
      */
     public function recordActivity($activity)
     {
+//    dd($project);
         $this->activity()->create([
-            'project_id' => class_basename($this) === 'Project' ? $this->id : $this->project_id,
-            'description' => $activity,
-            'changes' => $this->activityChanges() // do record changes only if we update.
+            'user_id'       => ($this->project ?? $this)->owner->id,
+            'project_id'    => class_basename($this) === 'Project' ? $this->id : $this->project_id,
+            'description'   => $activity,
+            'changes'       => $this->activityChanges() // do record changes only if we update.
         ]);
 
+    }
+
+    protected function activityOwner()
+    {
+//        return ($this->project ?? $this)->owner;
+
+//        $project = $this->project ?? $this;
+//        return $project->owner;
+
+//        if (class_basename($this) === 'Project') {
+//            return $this->owner;
+//        } else {
+//            return $this->project->owner;
+//        }
     }
 
     /**

@@ -1,1 +1,1 @@
-You created "{{ $activity->subject->body }}".
+{{ auth()->id() == $activity->user->id ? 'You' : $activity->user->name }} created "{{ $activity->subject->body }}".
