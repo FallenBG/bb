@@ -31,11 +31,12 @@ use Tests\Unit\NoteTest;
  */
 class Project extends Model
 {
+    use RecordsActivity;
     //
     // protected $fillable = ['title', 'description'];
     protected $guarded = [];
 
-    public $old = [];
+//    public $old = [];
 
 
     public function path()
@@ -81,37 +82,11 @@ class Project extends Model
 
     }//end note()
 
-
     public function activity()
     {
         return $this->hasMany(Activity::class);
 
     }//end activity()
-
-
-    public function recordActivity($activity)
-    {
-        $this->activity()->create([
-            'description'   => $activity,
-            'changes'       => $this->activityChanges($activity) // do record changes only if we update.
-        ]);
-
-    }//end recordActivity()
-
-
-    protected function activityChanges($activity)
-    {
-        if ($activity !== 'updated') {
-            return null;
-        }
-
-        return [
-//                'before' => array_diff($this->original, $this->attributes),
-//                'after'  => array_diff($this->attributes, $this->original)
-            'before' => Arr::except(array_diff($this->original, $this->attributes), 'updated_at'),
-            'after'  => Arr::except($this->getChanges(), 'updated_at')
-        ];
-    }
 
 
 }//end class

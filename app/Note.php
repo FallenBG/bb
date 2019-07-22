@@ -6,8 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Note extends Model
 {
+    use RecordsActivity;
+
     protected $guarded = [];
 
+    protected static $recordableEvents = ['updated'];
 
     public function project()
     {

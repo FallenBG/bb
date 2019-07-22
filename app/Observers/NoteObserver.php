@@ -14,6 +14,6 @@ class NoteObserver
      */
     public function updated(Note $note)
     {
-        $note->project->recordActivity( 'note_updated');
+//        $note->project->recordActivity( 'note_updated');
     }
 }
