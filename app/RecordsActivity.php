@@ -69,7 +69,7 @@ trait RecordsActivity
     {
 //    dd($project);
         $this->activity()->create([
-            'user_id'       => ($this->project ?? $this)->owner->id,
+            'user_id'       => ($this->project ?? $this)->owner->id, // $this->user_id,
             'project_id'    => class_basename($this) === 'Project' ? $this->id : $this->project_id,
             'description'   => $activity,
             'changes'       => $this->activityChanges() // do record changes only if we update.

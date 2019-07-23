@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use App\User;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -25,13 +26,30 @@ class ProjectTest extends TestCase
         $this->assertInstanceOf('App\User', $project->owner);
     }
 
+    /** @test */
     public function it_can_add_a_task()
     {
         $project = factory('App\Project')->create();
 
-        $task = $project->addTask('Test Task');
+        $task = $project->addTask([
+            'body' => 'Test Task',
+            'user_id' => $project->owner_id
+        ]);
 
         $this->assertCount(1, $project->tasks);
         $this->assertTrue($project->tasks->contains($task));
     }
+
+
+    /** @test */
+    public function it_can_invite_a_user()
+    {
+        $project = factory('App\Project')->create();
+
+        $project->invite($newUser = factory(User::class)->create());
+
+        $this->assertTrue($project->members->contains($newUser));
+    }
+
+
 }

@@ -37,14 +37,11 @@ class ProjectTasksController extends Controller
      *
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function store(Project $project)
     {
-        //
-        // dd('anaaa');
-        if (auth()->user()->isNot($project->owner)) {
-            abort(403);
-        }
+        $this->authorize('update', $project);
 
         // dd('asd');
         $validated = \request()->validate(
@@ -90,15 +87,17 @@ class ProjectTasksController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request $request
-     * @param  int                      $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function update(Project $project, Task $task)
     {
 
         // dd(\request('body'));
         // if (auth()->user()->isNot($project->owner)) abort(403);
-        $this->authorize('update', $project);
+//        $this->authorize('update', $project);
+        $this->authorize( $project); // can be used withouth the "update" if the action and the policy have the same name
 
         $validated = \request()->validate(
             [
