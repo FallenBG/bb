@@ -88,5 +88,17 @@ class Project extends Model
 
     }//end activity()
 
+    public function invite($user)
+    {
+        return $this->members()->attach($user);
+
+    }
+
+    public function members()
+    {
+        return $this->belongsToMany(User::class, 'project_members');
+
+    }
+
 
 }//end class
