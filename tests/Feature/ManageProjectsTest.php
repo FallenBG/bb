@@ -128,13 +128,45 @@ class ManageProjectsTest extends TestCase
 //        ]);
 
         $this->actingAs($project->owner)
-            ->patch($project->path().'/update', $attr = ['title' => 'changed title', 'description' => 'updated body'])
+            ->patch($project->path(), $attr = ['title' => 'changed title', 'description' => 'updated body'])
             ->assertRedirect($project->path());
 
         $this->get($project->path())->assertOk();
 
         $this->assertDatabaseHas('projects', $attr);
     }
+
+
+    /** @test */
+    public function a_guest_cannot_delete_project()
+    {
+//        $this->withoutExceptionHandling();
+        $project = \app(ProjectFactory::class)->withNote()->create();
+
+        $this->delete($project->path())->assertRedirect('/login');
+
+        $this->signIn();
+
+        $this->delete($project->path())->assertStatus(403);
+
+    }
+
+
+    /** @test */
+    public function a_user_can_delete_project()
+    {
+//        $this->withoutExceptionHandling();
+        $project = \app(ProjectFactory::class)->ownedBy($this->signIn())->withNote()->create();
+
+        $this->actingAs($project->owner)
+            ->delete($project->path())
+            ->assertRedirect('/projects');
+
+        $this->get($project->path())->assertStatus(404);
+
+        $this->assertDatabaseMissing('projects', ['id' => $project->id]); // $project->only('id')
+    }
+
 
     /** @test */
     public function a_user_can_view_their_project()

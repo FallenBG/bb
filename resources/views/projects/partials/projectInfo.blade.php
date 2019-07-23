@@ -8,8 +8,13 @@
             <p class="card-text">{{ $project->description }}</p>
         </div>
         <div class="card-footer">
+            <form method="POST" action="{{ $project->path() }}" >
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="btn btn-primary float-right">Delete</button>
+            </form>
             <small class="text-muted float-left mt-auto">Last updated<br>{{ $project->last_updated }}</small>
-            <a href="{{ $project->path() }}/update" class="btn btn-primary float-right">Update</a>
+            <a href="{{ $project->path() }}" class="btn btn-primary float-right mr-2">Update</a>
         </div>
     </div>
 </div>
