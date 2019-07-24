@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Project;
+use App\User;
 use Illuminate\Support\Facades\App;
 use Tests\Setup\ProjectFactory;
 use Tests\TestCase;
@@ -134,6 +135,15 @@ class ManageProjectsTest extends TestCase
         $this->get($project->path())->assertOk();
 
         $this->assertDatabaseHas('projects', $attr);
+    }
+
+    /** @test */
+    public function a_user_can_see_all_projects_they_are_invited_to()
+    {
+        $project = tap(app(ProjectFactory::class)->create())->invite($this->signIn());
+
+        $this->get('/projects')->assertSee($project->title);
+
     }
 
 

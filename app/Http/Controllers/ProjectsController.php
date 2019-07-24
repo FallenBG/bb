@@ -17,7 +17,7 @@ class ProjectsController extends Controller
      */
     public function index()
     {
-                $projects = auth()->user()->projects;
+                $projects = auth()->user()->accessibleProjects();
 
         // $projects = auth()->user()->projects()->orderBy('updated_at', 'desc')->get();
         // foreach ($projects as $project) {
