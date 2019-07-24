@@ -10,7 +10,11 @@
             / {{$project->title}}
         </div>
         <div class="col-lg-2">
-            <a href="/projects" class="float-right">
+            @foreach($project->members as $member)
+                <img src="{{ gravatar_url($member->email) }}" alt="{{ $member->name }}'s avatar" class="rounded-circle mr-2 mb-2">
+            @endforeach
+            <img src="{{ gravatar_url($project->owner->email) }}" alt="{{ $project->owner->name }}'s avatar" class="rounded-circle mr-2 mb-2">
+            <a href="/projects" class="float-right mt-1">
                 <button type="button" class="btn btn-primary">
                     Back
                 </button>
