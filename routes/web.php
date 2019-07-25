@@ -34,13 +34,13 @@ Route::group(
 
         Route::resource('projects', 'ProjectsController');
 
-
-
         Route::post('projects/{project}/tasks', 'ProjectTasksController@store');
         Route::patch('projects/{project}/tasks/{task}', 'ProjectTasksController@update');
 
         Route::get('projects/{project}/note', 'ProjectNoteController@store');
         Route::patch('projects/{project}/note/{note}', 'ProjectNoteController@update');
+
+        Route::post('projects/{project}/invitations', 'ProjectInvitationsController@store');
 
         Route::get('/home', 'HomeController@index')->name('home');
     }
