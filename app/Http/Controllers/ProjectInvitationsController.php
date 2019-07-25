@@ -13,11 +13,13 @@ class ProjectInvitationsController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param Project $project
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Project $project)
     {
         //
+//        return view('projects.invite', compact('project'));
     }
 
     /**
@@ -34,8 +36,8 @@ class ProjectInvitationsController extends Controller
      * Store a newly created resource in storage.
      *
      * @param Project $project
+     * @param ProjectInvitationRequest $request
      * @return redirect
-     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function store(Project $project, ProjectInvitationRequest $request)
     {

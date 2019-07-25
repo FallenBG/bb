@@ -40,6 +40,7 @@ Route::group(
         Route::get('projects/{project}/note', 'ProjectNoteController@store');
         Route::patch('projects/{project}/note/{note}', 'ProjectNoteController@update');
 
+//        Route::get('projects/{project}/invitations', 'ProjectInvitationsController@index');
         Route::post('projects/{project}/invitations', 'ProjectInvitationsController@store');
 
         Route::get('/home', 'HomeController@index')->name('home');

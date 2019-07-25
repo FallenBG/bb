@@ -18,5 +18,12 @@ class ProjectPolicy
 
     }//end update()
 
+    public function manage(User $user, Project $project)
+    {
+        // dd([$user,$project] );
+        return $user->is($project->owner);
+
+    }//end update()
+
 
 }//end class

@@ -35,6 +35,10 @@ class InvitationsTest extends TestCase
         $user = factory(User::class)->create();
 
         $this->actingAs($user)->post($project->path() . '/invitations')->assertStatus(403);
+
+        $project->invite($user);
+
+        $this->actingAs($user)->post($project->path() . '/invitations')->assertStatus(403);
     }
     
     /** @test */
@@ -48,7 +52,7 @@ class InvitationsTest extends TestCase
             'email' => "example@email.coms"
         ])->assertSessionHasErrors([
             'email' => 'The User you are inviting must have BB account.'
-        ]);
+        ], null, 'invitations');
     }
 
     /** @test */
