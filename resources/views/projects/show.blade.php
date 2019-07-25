@@ -107,6 +107,13 @@
             @include('projects.partials.projectInfo')
 
             @include('projects.partials.activity')
+
+            {{--@if( $project->owner == auth()->user())--}}
+                {{--@include('projects.partials.invite')--}}
+            {{--@endif--}}
+            @can('manage', $project)
+                @include('projects.partials.invite')
+            @endcan
         </div>
 
     </div>
