@@ -2,11 +2,13 @@
     <div class="card-header bg-transparent border border-primary border-bottom-0 border-3">
         <h5>
             <a href="{{ $project->path() }}">{{$project->title}}</a>
-            <form method="POST" action="{{ $project->path() }}" class="float-right">
-                @csrf
-                @method('DELETE')
-                <button type="submit" class="btn btn-primary float-right">Delete</button>
-            </form>
+            @can('manage', $project)
+                <form method="POST" action="{{ $project->path() }}" class="float-right">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-primary float-right">Delete</button>
+                </form>
+            @endcan
         </h5>
 
     </div>

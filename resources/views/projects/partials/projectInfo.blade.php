@@ -10,11 +10,13 @@
         </div>
         {{--<a href="{{ $project->path() }}/invitations" class="btn btn-primary float-right float-right">Invite</a>--}}
         <div class="card-footer">
-            <form method="POST" action="{{ $project->path() }}" >
-                @csrf
-                @method('DELETE')
-                <button type="submit" class="btn btn-primary float-right">Delete</button>
-            </form>
+            @can('manage', $project)
+                <form method="POST" action="{{ $project->path() }}" >
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-primary float-right">Delete</button>
+                </form>
+            @endcan
             <small class="text-muted float-left mt-auto">Last updated<br>{{ $project->last_updated }}</small>
             <a href="{{ $project->path() }}/update" class="btn btn-primary float-right mr-2">Update</a>
         </div>
