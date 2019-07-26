@@ -18,7 +18,12 @@
                 </form>
             @endcan
             <small class="text-muted float-left mt-auto">Last updated<br>{{ $project->last_updated }}</small>
-            <a href="{{ $project->path() }}/update" class="btn btn-primary float-right mr-2">Update</a>
+            {{--<a href="{{ $project->path() }}/update" class="btn btn-primary float-right mr-2">Update</a>--}}
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createProject" data-whatever="@mdo">Update</button>
         </div>
     </div>
 </div>
+
+@include('projects.modals.project', [
+        'action' => 'Update',
+    ])

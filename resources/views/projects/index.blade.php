@@ -7,8 +7,12 @@
             <div class="container-fluid">
                 {{--<h1 class="float-left">{{ config('app.name', 'BirdBoard') }}</h1>--}}
                 <h1 class="float-left">My Projects</h1>
-                <a href="/projects/create" class="float-right">
-                    <button type="button" class="btn btn-primary">Create new Project</button>
+                {{--<a href="/projects/create" class="float-right">--}}
+                    {{--<button type="button" class="btn btn-primary">Create new Project</button>--}}
+                {{--</a>--}}
+                <a href="#" class="float-right">
+                    {{--<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Open modal for @mdo</button>--}}
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createProject" data-whatever="@mdo">Create new Project</button>
                 </a>
             </div>
         </div>
@@ -37,6 +41,8 @@
         </div>
     {{--</div>--}}
 
-
+    @include('projects.modals.project', [
+        'action' => 'Create',
+    ])
 
 @endsection

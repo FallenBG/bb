@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Project;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\MessageBag;
 
 class ProjectsController extends Controller
 {
@@ -41,7 +42,7 @@ class ProjectsController extends Controller
      */
     public function create()
     {
-                return view('projects.create');
+        return view('projects.create');
 
     }//end create()
 
@@ -88,7 +89,7 @@ class ProjectsController extends Controller
      * @return \Illuminate\Http\Response
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function show(Project $project)
+    public function show(Project $project,  MessageBag $message_bag)
     {
         // dd($project);
         // $project = Project::whereId($project->id);
@@ -97,6 +98,9 @@ class ProjectsController extends Controller
         // abort_if($project->owner_id != auth()->id(), 403);
         // if (auth()->user()->isNot($project->owner)) abort(403);
         $this->authorize('update', $project);
+//        $message_bag->add('token', 'This is the error message');
+
+//        dd($message_bag); // <== this
 
         // dd($project);
         $project->last_updated = Carbon::parse($project->updated_at);
