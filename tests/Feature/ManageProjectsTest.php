@@ -86,28 +86,19 @@ class ManageProjectsTest extends TestCase
 
 //        $attributes = [
 //            'title'         => $this->faker->sentence,
-//            'description'   => $this->faker->paragraph
+//            'description'   => $this->faker->paragraph,
 //        ];
+        $attributes = factory(Project::class)->raw(['owner_id' => auth()->id()]);
 
-//        \DB::enableQueryLog();
-
-        $attributes = [
-            'title'         => $this->faker->sentence,
-            'description'   => $this->faker->paragraph,
-        ];
-
-        $response = $this->post('/projects', $attributes);
-
-        $project = Project::where($attributes)->first();
-        $response->assertRedirect($project->path());
-//        dd(get_class($response));
-//        $response->dump();
-//        dd(\DB::getQueryLog());
+//        $this->post('/projects', $attributes);
+//        $this->assertDatabaseHas('projects', $attributes);
+//        $this->get('/projects')->assertSee($attributes['title']);
 
 
-        $this->assertDatabaseHas('projects', $attributes);
-
-        $this->get('/projects')->assertSee($attributes['title']);
+        $this->followingRedirects()
+            ->post('/projects', $attributes = factory(Project::class)->raw())
+            ->assertSee($attributes['title'])
+            ->assertSee($attributes['description']);
     }
 
 
@@ -143,7 +134,6 @@ class ManageProjectsTest extends TestCase
         $project = tap(app(ProjectFactory::class)->create())->invite($this->signIn());
 
         $this->get('/projects')->assertSee($project->title);
-
     }
 
 
@@ -175,6 +165,22 @@ class ManageProjectsTest extends TestCase
         $this->get($project->path())->assertStatus(404);
 
         $this->assertDatabaseMissing('projects', ['id' => $project->id]); // $project->only('id')
+    }
+
+
+    /** @test */
+    public function users_cannot_delete_project()
+    {
+        $project = \app(ProjectFactory::class)->create();
+
+        $user = factory(User::class)->create();
+
+        $project->invite($user);
+
+        $this->actingAs($user)
+            ->delete($project->path())
+            ->assertStatus(403);
+
     }
 
 
