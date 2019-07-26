@@ -49489,6 +49489,44 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/libs/main.js":
+/*!***********************************!*\
+  !*** ./resources/js/libs/main.js ***!
+  \***********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+
+
+/***/ }),
+
+/***/ "./resources/js/libs/modals.js":
+/*!*************************************!*\
+  !*** ./resources/js/libs/modals.js ***!
+  \*************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+$('#createProject').on('show.bs.modal', function (event) {
+  // console.log('asdas');
+  // $('#myInput').trigger('focus')
+  var button = $(event.relatedTarget); // Button that triggered the modal
+
+  var recipient = button.data('whatever'); // Extract info from data-* attributes
+  // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+  // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+
+  var modal = $(this);
+  modal.find('.modal-title').text('New message to ' + recipient); // modal.find('.modal-body input').val(recipient)
+}); // Show modal if errors
+
+if ($('.alert-danger')[0]) {
+  console.log($bag);
+  $('#createProject').modal('show');
+}
+
+/***/ }),
+
 /***/ "./resources/sass/app.scss":
 /*!*********************************!*\
   !*** ./resources/sass/app.scss ***!
@@ -49501,13 +49539,15 @@ __webpack_require__.r(__webpack_exports__);
 /***/ }),
 
 /***/ 0:
-/*!*************************************************************!*\
-  !*** multi ./resources/js/app.js ./resources/sass/app.scss ***!
-  \*************************************************************/
+/*!***********************************************************************************************************************!*\
+  !*** multi ./resources/js/app.js ./resources/js/libs/main.js ./resources/js/libs/modals.js ./resources/sass/app.scss ***!
+  \***********************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(/*! S:\www\birdboard\resources\js\app.js */"./resources/js/app.js");
+__webpack_require__(/*! S:\www\birdboard\resources\js\libs\main.js */"./resources/js/libs/main.js");
+__webpack_require__(/*! S:\www\birdboard\resources\js\libs\modals.js */"./resources/js/libs/modals.js");
 module.exports = __webpack_require__(/*! S:\www\birdboard\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
